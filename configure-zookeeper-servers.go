@@ -52,6 +52,15 @@ func main() {
 	} else {
 		log.Println("WARNING - No Zookeeper servers found. Keeping as the default localhost")
 	}
+
+	log.Println("Checking for nimbus server in env APACHE_STORM_NIMBUS_SERVICE_HOST")
+	nimbusServer := os.Getenv("APACHE_STORM_NIMBUS_SERVICE_HOST")
+	if len(nimbusServer) == 0 {
+		log.Println("No nimbus servers found, keeping the default")
+	} else {
+		log.Println("Using nimbus server " + nimbusServer)
+		m["nimbus.host"] = nimbusServer
+	}
 	
 	log.Println("Trying to save modified config")
 	d, err := yaml.Marshal(&m)

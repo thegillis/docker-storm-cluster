@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: apache-storm-supervisor
+spec:
+  replicas: 2
+  selector:
+    storm: supervisor
+  template:
+    metadata:
+      labels:
+        storm: supervisor
+        app: storm
+    spec:
+      containers:
+      - name: zookeeper
+        image: thegillis/storm-cluster:latest
+        env:
+        - name: CONFIGURE_ZOOKEEPER
+          value: "true"
+        - name: STORM_CMD
+          value: "supervisor"
+        volumeMounts:
+        - name: storm-data
+          mountPath: /opt/apache-storm/storm-local
+      volumes:
+      - name: storm-data
+        emptyDir: {}
+
