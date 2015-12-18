@@ -3,7 +3,7 @@ kind: ReplicationController
 metadata:
   name: apache-storm-supervisor
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     storm: supervisor
   template:
